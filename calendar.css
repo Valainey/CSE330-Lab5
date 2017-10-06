@@ -1,0 +1,78 @@
+ 
+
+ 
+ body {
+  background-color: lavender;
+}
+
+#calendar {
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 50px;
+}
+
+th {
+  height: 40px;
+  text-align: center;
+  font-weight: 600;
+}
+
+td {
+  height: 80px;
+  text-align: center;
+}
+
+.other-month {
+  color: red;
+}
+
+th:nth-of-type(1), td:nth-of-type(1){
+  color: grey;
+}
+th:nth-of-type(7), td:nth-of-type(7){
+  color: grey;
+}
+th,td {
+  width: calc(100%/7);
+}
+
+#display_month {
+  display: inline-block;
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+#prev_month_btn {
+  margin-right: 30px;
+}
+#next_month_btn {
+  margin-left: 30px;
+}
+
+#addEvent {
+  float: left;
+  margin-left: 10px;
+}
+
+.login {
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.register {
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+#logout_btn {
+  clear: both;
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.hide {
+  display: none;
+}

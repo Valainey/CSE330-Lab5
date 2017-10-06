@@ -1,0 +1,175 @@
+<!DOCTYPE html>↩
+<html>↩
+<head>↩
+  <title>Calendar</title>↩
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">↩
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>↩
+  <link href='calendar.css' rel="stylesheet" type='text/css'>↩
+</head>↩
+↩
+<!--↩
+<?php↩
+session_start();↩
+require 'database.php';↩
+if(isset($_SESSION['user_id']))↩
+{↩
+echo "Welcome to your calendar, ".$_SESSION['user_id']."!";↩
+}else{↩
+echo "You need to sign in first to create a new event";↩
+↩
+}↩
+?>↩
+-->↩
+↩
+<body>↩
+  <div id="login" class="login">↩
+    <form name="Login" id="login_form">↩
+      <input type="text" id="username" placeholder="Username"/>↩
+      <input type="password" id="password" placeholder="Password"/>↩
+      <button id="login_btn">Log In</button>↩
+    </form>↩
+  </div>↩
+↩
+  <div id="register" class="register">↩
+    <form name="Register" id="register_form">↩
+      <input type="text" name="new_username" id="new_username" placeholder="New Username" />↩
+      <input type="password" name="new_password" id="new_password" placeholder="New Password" />↩
+      <button id="register_btn">Register</button>↩
+    </form>↩
+  </div>↩
+↩
+  <div id="logout" class="logout">↩
+    <button id="logout_btn">Log Out</button>↩
+  </div>↩
+↩
+↩
+  <!-- idea for overlay window taken from https://tympanus.net/codrops/2013/11/07/css-overlay-techniques/ -->↩
+  <!-- syntax for modal window inspired by https://www.w3schools.com/howto/howto_css_modals.asp-->↩
+↩
+  <div class="overlay" id="overlay"></div>↩
+↩
+  <div class="modal fade" id="event_display">↩
+    <div class="modal_content">↩
+      <div class="modal_header">↩
+        <button type="button" class="close">&times;</button>↩
+        <h2 class="modal_date" id="modal_date"></h2>↩
+      </div>↩
+      <div class="modal_body">↩
+        <p>Some text in the modal.</p>↩
+      </div>↩
+    </div>↩
+  </div>↩
+↩
+↩
+  <div id="calendar">↩
+    <table class="table table-bordered">↩
+      <tr>↩
+        <th colspan="7">↩
+          <button id="prev_month_btn">Prev</button>↩
+          <h1 id="display_month"></h1>↩
+          <button id="next_month_btn">Next</button>↩
+        </th>↩
+↩
+      </tr>↩
+      <tr>↩
+        <th> SUN </th>↩
+        <th> MON </th>↩
+        <th> TUE </th>↩
+        <th> WED </th>↩
+        <th> THU </th>↩
+        <th> FRI </th>↩
+        <th> SAT </th>↩
+      </tr>↩
+      <tr id = "week0">↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+      </tr>↩
+      <tr id = "week1">↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+      </tr>↩
+      <tr id = "week2">↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+      </tr>↩
+      <tr id = "week3">↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+      </tr>↩
+      <tr id = "week4">↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+      </tr>↩
+      <tr id = "week5">↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+        <td></td>↩
+      </tr>↩
+    </table>↩
+  </div>↩
+↩
+↩
+  <div class = "addEvent" id="addEvent">↩
+    <form name = "AddEvent"  id = "addEvent_form">↩
+      Event Name: <input type= "text" id="eventName" name = "eventName"><br>↩
+      Date: <input type= "date" id="eventDate" name="eventDate"><br>↩
+      Time: <input type= "time" id="eventTime" name="eventTime"><br>↩
+      <button id="addEvent_btn">Add Event</button>↩
+    </form>↩
+  </div>↩
+↩
+  <div class = "editEvent" id="editEvent">↩
+    <form name = "EditEvent" id = "editEvent_form">↩
+      id: <input type= "number" id ="id" name = "id"><br>↩
+      Event Name: <input type= "text" id ="editName" name = "editName"><br>↩
+      New Date: <input type= "date" id ="editDate" name = "editDate"><br>↩
+      eventTime: <input type= "time" id ="editTime"  name = "editTime"><br>↩
+      <button id="editEvent_btn">Edit Event</button>↩
+    </form>↩
+  </div>↩
+  ↩
+  <div class = "deleteEvent" id="deleteEvent">↩
+    <form name = "DeleteEvent"  id = "deleteEvent_form">↩
+      Event Name: <input type= "text" id="deleteName" name = "deleteName"><br>↩
+      <button id="deleteEvent_btn">Delete Event</button>↩
+    </form>↩
+  </div>↩
+  ↩
+↩
+↩
+↩
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>↩
+<script src ="http://classes.engineering.wustl.edu/cse330/content/calendar.min.js" type ="text/javascript"></script>↩
+<script type="text/javascript" src="calendar.js"></script>↩
+<script type="text/javascript" src="ajax.js"></script>↩
+</body>↩
+</html>
